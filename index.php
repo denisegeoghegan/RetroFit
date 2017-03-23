@@ -30,6 +30,7 @@ $content = '<img src="Images/shirt1.jpg" class="imgLeft"/>
 </p>
 <img src="Images/shirt3.jpg" class="imgLeft"/>
 <p>
+
     Quis gravida felis ornare. Maecenas ullamcorper ipsum at dolor ultricies, sit 
     amet lacinia enim consectetur. Donec sit amet iaculis massa. Praesent 
     tincidunt mauris non lectus auctor, et sagittis libero porttitor. Nullam 
