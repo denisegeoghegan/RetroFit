@@ -14,7 +14,7 @@
 class JerseyObject {
     //put your code here
     public $id;
-    public $condition;
+    public $league;
     public $design;
     public $price;
     public $team;
@@ -23,9 +23,9 @@ class JerseyObject {
     public $details;
  
     
-    function __construct($id, $condition, $design, $price, $team, $players, $image, $details) {
+    function __construct($id, $league, $design, $price, $team, $players, $image, $details) {
         $this->id = $id;
-        $this->condition = $condition;
+        $this->league = $league;
         $this->design = $design;
         $this->price = $price;
         $this->team = $team;

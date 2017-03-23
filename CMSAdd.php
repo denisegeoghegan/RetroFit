@@ -20,8 +20,14 @@ if (isset($_GET["update"])) {
     <fieldset>
         <legend>Update jersey information</legend><br/>
         
-        <label for='condition'>Condition: </label>
-        <input type='text' class='inputField' name='txtCondition' value='$jersey->condition'/><br/>
+        <label for='team'>League: </label>
+        <select class='inputField' name='ddlLeague'>
+            <option value='%'>All</option>"
+            . $jerseyController->CreateOptions($jerseyController->GetAllJerseyTypes()) . "
+        </select> <br/>
+        
+        <label for='league'>League: </label>
+        <input type='text' class='inputField' name='txtLeague' value='$jersey->league'/><br/>
    
        
         <label for='design'>Design: </label>
@@ -31,11 +37,9 @@ if (isset($_GET["update"])) {
         <input type='text' class='inputField' name='txtPrice' value='$jersey->price'/><br/>
         
         
-        <label for='team'>Team: </label>
-        <select class='inputField' name='ddlTeam'>
-            <option value='%'>All</option>"
-            . $jerseyController->CreateOptions($jerseyController->GetAllJerseyTypes()) . "
-        </select> <br/>
+        <label for='league'>Team: </label>
+        <input type='text' class='inputField' name='txtTeam' value='$jersey->team'/><br/>
+   
         
         <label for='players'>Players: </label>
         <input type='text' class='inputField' name='txtPlayers' value='$jersey->players'/><br/>
@@ -57,8 +61,13 @@ if (isset($_GET["update"])) {
     <fieldset>
         <legend>Add new jersey</legend><br/>
         
-        <label for='condition'>Condition: </label>
-        <input type='text' class='inputField' name='txtCondition'/><br/>
+               <label for='team'>League: </label>
+        <select class='inputField' name='ddlLeague'>
+            <option value='%'>All</option>"
+            . $jerseyController->CreateOptions($jerseyController->GetAllJerseyTypes()) . "
+        </select> <br/>
+        
+       
    
        
         <label for='design'>Design: </label>
@@ -67,12 +76,9 @@ if (isset($_GET["update"])) {
         <label for='price'>Price: </label>
         <input type='text' class='inputField' name='txtPrice'/><br/>
         
-        
-        <label for='team'>Team: </label>
-        <select class='inputField' name='ddlTeam'>
-            <option value='%'>All</option>"
-            . $jerseyController->CreateOptions($jerseyController->GetAllJerseyTypes()) . "
-        </select> <br/>
+         <label for='league'>Team: </label>
+        <input type='text' class='inputField' name='txtTeam'/><br/>
+ 
         
         <label for='players'>Players: </label>
         <input type='text' class='inputField' name='txtPlayers'/><br/>
@@ -90,11 +96,11 @@ if (isset($_GET["update"])) {
 </form>";
 }
 if (isset($_GET["update"])) {
-    if (isset($_POST["txtCondition"])) {
+    if (isset($_POST["txtLeague"])) {
         $jerseyController->UpdateJersey($_GET["update"]);
     }
 } else {
-    if (isset($_POST["txtCondition"])) {
+    if (isset($_POST["txtLeague"])) {
         $jerseyController->InsertJersey();
     }
 }

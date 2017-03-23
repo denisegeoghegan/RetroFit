@@ -28,7 +28,7 @@ class JerseyModel {
         //Open connection to DB
         mysql_connect($host, $user, $passwd) or die(mysql_error());
         mysql_select_db($database);
-        $result = mysql_query("SELECT DISTINCT team FROM jerseys") or die (mysql_error());
+        $result = mysql_query("SELECT DISTINCT league FROM jerseys") or die (mysql_error());
         $types = array();
         
         //Get data from db
@@ -52,14 +52,14 @@ class JerseyModel {
         mysql_connect($host, $user, $passwd) or die (mysql_error());
         mysql_select_db($database);
         
-        $query = "SELECT * FROM jerseys WHERE team LIKE '$type'";
+        $query = "SELECT * FROM jerseys WHERE league LIKE '$type'";
         $result = mysql_query($query) or die (mysql_error());
         $jerseyArray = array();
         
         //Return data from db
         while($row = mysql_fetch_array($result)){
             $id = $row[0];
-            $condition = $row[1];
+            $league = $row[1];
             $design = $row[2];
             $price = $row[3];
             $team = $row[4];
@@ -68,7 +68,7 @@ class JerseyModel {
             $details = $row[7];
             
             //Create jersey objects and save them in an array
-            $jersey = new JerseyObject($id, $condition, $design, $price, $team, $players, $image, $details);
+            $jersey = new JerseyObject($id, $league, $design, $price, $team, $players, $image, $details);
             array_push($jerseyArray, $jersey);
         }
         
@@ -90,7 +90,7 @@ class JerseyModel {
         
         //Return data from db
         while($row = mysql_fetch_array($result)){
-            $condition = $row[1];
+            $league = $row[1];
             $design = $row[2];
             $price = $row[3];
             $team = $row[4];
@@ -99,7 +99,7 @@ class JerseyModel {
             $details = $row[7];
             
             //Create jersey object
-            $jersey = new JerseyObject($id, $condition, $design, $price, $team, $players, $image, $details);
+            $jersey = new JerseyObject($id, $league, $design, $price, $team, $players, $image, $details);
         }
         
         //Close db and return array 
@@ -110,10 +110,13 @@ class JerseyModel {
     }   
     //Insert new record to DB
     function InsertJersey(JerseyObject $jersey){
-        
-         $query = sprintf("INSERT INTO 'jerseys'('condition', 'design', 'price', 'team', 'players', 'image', 'details') 
+        require 'Credentials.php';
+        mysql_connect($host, $user, $passwd) or die(mysql_error());
+        mysql_select_db($database);
+         
+        $query = sprintf("INSERT INTO `jerseys`(`league`, `design`, `price`, `team`, `players`, `image`, `details`)
                  VALUES('%s','%s','%s','%s','%s','%s','%s')",
-                 mysql_real_escape_string($jersey->condition),
+                 mysql_real_escape_string($jersey->league),
                  mysql_real_escape_string($jersey->design),
                  mysql_real_escape_string($jersey->price),
                  mysql_real_escape_string($jersey->team),
@@ -121,23 +124,29 @@ class JerseyModel {
                  mysql_real_escape_string('Images/Jersey/' . $jersey->image),
                  mysql_real_escape_string($jersey->details));
          
-                 $this->DBQuery($query);
+         mysql_query($query) or die(mysql_error());
+         mysql_close();
      
     }
       //Edit existing record
     function UpdateJersey($id, JerseyObject $jersey){
-
-         $query = sprintf("UDPATE 'jerseys' SET 'condition' = '%s', 'design' = '%s', 'price' = '%s',
-          'team' = '%s', 'players' = '%s', 'image' = '%s', 'details' = '%s' WHERE 'id' = $id",
-                 mysql_real_escape_string($jersey->condition),
+     //Open connection to db
+        require 'Credentials.php';
+        mysql_connect($host, $user, $passwd) or die(mysql_error());
+        mysql_select_db($database);
+      
+         $query = sprintf("UPDATE `jerseys` SET `league` = '%s', `design` = '%s', `price` = '%s',
+         `team` = '%s', `players` = '%s', `image` = '%s', `details` = '%s' WHERE `id` = $id",
+                 mysql_real_escape_string($jersey->league),
                  mysql_real_escape_string($jersey->design),
                  mysql_real_escape_string($jersey->price),
                  mysql_real_escape_string($jersey->team),
                  mysql_real_escape_string($jersey->players),
                  mysql_real_escape_string('Images/Jersey/' . $jersey->image),
                  mysql_real_escape_string($jersey->details));
-         
-         $this->DBQuery($query);
+        
+        mysql_query($query) or die(mysql_error());
+        mysql_close();
       
     }
       //Delete a row in db by id
@@ -148,21 +157,7 @@ class JerseyModel {
         $this->DBQuery($query);
 
     }  
-    //Query function 
-    function DBQuery($query){
-        
-                
-         //Open connection to db
-        require 'Credentials.php';
-        mysql_connect($host, $user, $passwd) or die(mysql_error());
-        mysql_select_db($database);
-   
-        //Execute query and close connection
-        mysql_query($query) or die(mysql_error());
-        mysql_close();
-        
-        
-    }
+ 
 }
 
 ?>

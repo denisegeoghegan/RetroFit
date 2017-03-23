@@ -22,7 +22,7 @@ class JerseyController {
     function CreateJerseyDropdownList() {
         $jerseyModel = new JerseyModel();
         $result = "<form action = '' method = 'post' width = '200px'>
-                    Please select a team: 
+                    Please select a league: 
                     <select name = 'types' >
                         <option value = '%' >All</option>
                         " . $this->CreateOptions($jerseyModel->GetAllJerseyTypes()) .
@@ -55,8 +55,8 @@ class JerseyController {
                     "<table class = 'jerseyTable'>
                         <tr>
                             <th rowspan='6' width = '150px' ><img runat = 'server' src = '$jersey->image' /></th>
-                            <th width = '75px' >Condition: </th>
-                            <td>$jersey->condition</td>
+                            <th width = '75px' >League: </th>
+                            <td>$jersey->league</td>
                         </tr>
                         
                         <tr>
@@ -89,30 +89,30 @@ class JerseyController {
 
     //Insert new jersey into DB
     function InsertJersey() {
-        $condition = $_POST['txtCondition'];
+        $league = $_POST['ddlLeague'];
         $design = $_POST['txtDesign'];
         $price = $_POST['txtPrice'];
-        $team = $_POST['ddlTeam'];
+        $team = $_POST['txtTeam'];
         $players = $_POST['txtPlayers'];
         $image = $_POST['ddlImage'];
         $details = $_POST['txtDetails'];
 
 
-        $jersey = new JerseyObject(-1, $condition, $design, $price, $team, $players, $image, $details);
+        $jersey = new JerseyObject(-1, $league, $design, $price, $team, $players, $image, $details);
         $jerseyModel = new JerseyModel();
         $jerseyModel->InsertJersey($jersey);
     }
 
     function UpdateJersey($id) {
-        $condition = $_POST["txtCondition"];
+        $league = $_POST["ddlLeague"];
         $design = $_POST["txtDesign"];
         $price = $_POST["txtPrice"];
-        $team = $_POST["ddlTeam"];
+        $team = $_POST["txtTeam"];
         $players = $_POST["txtPlayers"];
         $image = $_POST["ddlImage"];
         $details = $_POST["txtDetails"];
 
-        $jersey = new JerseyObject($id, $condition, $design, $price, $team, $players, $image, $details);
+        $jersey = new JerseyObject($id, $league, $design, $price, $team, $players, $image, $details);
         $jerseyModel = new JerseyModel();
         $jerseyModel->UpdateJersey($id, $jersey);
     }
@@ -168,7 +168,7 @@ class JerseyController {
         <td></td>
         <td></td>
         <td><b>Id</b></td>
-        <td><b>Condition</b></td>
+        <td><b>league</b></td>
         <td><b>Design</b></td>
         <td><b>Price</b></td>
         <td><b>Team</b></td>
@@ -183,7 +183,7 @@ class JerseyController {
     <td><a href='CMSAdd.php?update=$value->id'>Update</a></td>
     <td><a href='#' onclick='confirmBox($value->id)'>Delete</a></td>
     <td>$value->id</td>
-    <td>$value->condition</td>
+    <td>$value->league</td>
     <td>$value->design</td>
     <td>$value->price</td>
     <td>$value->team</td>
