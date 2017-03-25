@@ -156,7 +156,18 @@ class JerseyModel {
         
         $this->DBQuery($query);
 
-    }  
+    }
+    function DBQuery($query){
+      
+      //Open connection to db
+      require 'Credentials.php';
+      mysql_connect($host, $user, $passwd) or die(mysql_error());
+      mysql_select_db($database);
+      
+      mysql_query($query);
+      mysql_close();
+      
+    }
  
 }
 

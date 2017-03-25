@@ -25,9 +25,6 @@ if (isset($_GET["update"])) {
             <option value='%'>All</option>"
             . $jerseyController->CreateOptions($jerseyController->GetAllJerseyTypes()) . "
         </select> <br/>
-        
-        <label for='league'>League: </label>
-        <input type='text' class='inputField' name='txtLeague' value='$jersey->league'/><br/>
    
        
         <label for='design'>Design: </label>
@@ -96,11 +93,11 @@ if (isset($_GET["update"])) {
 </form>";
 }
 if (isset($_GET["update"])) {
-    if (isset($_POST["txtLeague"])) {
+    if (isset($_POST["ddlLeague"])) {
         $jerseyController->UpdateJersey($_GET["update"]);
     }
 } else {
-    if (isset($_POST["txtLeague"])) {
+    if (isset($_POST["ddlLeague"])) {
         $jerseyController->InsertJersey();
     }
 }
